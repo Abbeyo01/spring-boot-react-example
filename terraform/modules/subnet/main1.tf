@@ -1,13 +1,12 @@
-/*resource "aws_subnet" "myapp-subnet" {
-  vpc_id            = var.vpc_id
-  cidr_block        = var.subnet_cidr_block
+resource "aws_subnet" "myapp-subnet" {
+    #vpc_id = var.vpc_id #correct one
+  vpc_id = aws_vpc.myapp-vpc.id  # not correct but using it to test run
+  cidr_block = var.subnet_cidr_block
   availability_zone = var.avail_zone
-
   tags = {
-    Name = "${var.env_prefix}-subnet"
+    Name: var.env_prefix
   }
 }
-
 
 resource "aws_internet_gateway" "myapp-igw" {
   vpc_id = var.vpc_id
@@ -26,4 +25,4 @@ resource "aws_default_route_table" "main-rtb" {
   tags = { 
     Name = "${var.env_prefix}-main-rtb"
   }
-}*/
+}

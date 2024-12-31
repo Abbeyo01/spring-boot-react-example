@@ -1,27 +1,29 @@
-variable "instance_type" {
-  description = "Type of EC2 instance"
-  default     = "t2.micro"
+variable "vpc_cidr_block" {
+  description = "CIDR block for the VPC"
+  type        = string
 }
-variable "frontend_ami" {}
-variable "backend_ami" {}
-variable "jenkins_ami" {}
-variable "bucket_name" {}
-variable "vpc_cidr_block" {}
+
 variable "private_subnet_cidr_blocks" {
   description = "CIDR blocks for private subnets"
-  type = list(string)
+  type        = list(string)
 }
+
 variable "public_subnet_cidr_blocks" {
   description = "CIDR blocks for public subnets"
-  type = list(string)
+  type        = list(string)
 }
-variable "instance_class" {}
-variable "my_ip" {}
-variable "public_key_location" {}
-variable "image_name" {}
-variable "env_prefix" {}
-variable subnet_cidr_block {}
-variable avail_zone {}
-/*variable my_ip {}*/
 
-variable private_key_location {}
+variable "my_ip" {
+  description = "Your IP for SSH access"
+  type        = string
+}
+
+variable "env_prefix" {
+  description = "Environment prefix for naming resources"
+  type        = string
+}
+
+variable "azs" {
+  description = "Availability Zones"
+  type        = list(string)
+}
