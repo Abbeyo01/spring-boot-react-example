@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_log_group" "ec2_logs" {
+/*resource "aws_cloudwatch_log_group" "ec2_logs" {
   name              = "/aws/ec2/logs"
   retention_in_days = 7
 
@@ -25,7 +25,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   tags = {
     Environment = var.env_prefix
   }
-}
+}*/
 
 
 
