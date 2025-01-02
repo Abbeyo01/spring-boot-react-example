@@ -1,4 +1,4 @@
-output "aws_db_instance_id" {
+output "rds_instance_id" {
   value = aws_db_instance.rds.id
 }
 
@@ -12,5 +12,5 @@ output "db_endpoint" {
 }
 
 output "db_subnet_group_name" {
-  value = aws_db_subnet_group.private.name
+  value = aws_db_subnet_group.db_subnet_group
 }

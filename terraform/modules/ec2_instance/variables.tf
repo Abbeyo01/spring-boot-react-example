@@ -8,4 +8,7 @@ variable subnet_id {}
 variable "image_name" {}
 variable "public_key_location" {}
 variable "instance_type" {}
-
+#variable "user_data" {
+ # description = "User data script to initialize the instance"
+  #type        = string
+#}

@@ -54,6 +54,8 @@ resource "aws_cloudwatch_log_group" "rds_log_group" {
   name = "/aws/rds/logs"
 }
 
+
+
 # CloudWatch Alarm for Frontend EC2 CPU Utilization
 resource "aws_cloudwatch_metric_alarm" "frontend_cpu_utilization" {
   alarm_name          = "frontend-cpu-utilization-high"
@@ -66,11 +68,15 @@ resource "aws_cloudwatch_metric_alarm" "frontend_cpu_utilization" {
   threshold           = "80"
   alarm_description   = "Alarm if CPU utilization of the frontend instance exceeds 80%"
   dimensions = {
-    #InstanceId = module.ec2_instance.ec2_public_ip.id
-    InstanceId = module.ec2_instance.frontend-instance.InstanceId
+    #frontend_instance_id = module.ec2_instance.frontend_instance_id
+    InstanceId = var.frontend_instance_id
+
+    #InstanceId = module.ec2_instance.frontend-instance
+    #monitored_instance_ids = [module.ec2_instance.frontend-instance.instance_id]
   }
   actions_enabled = true
 }
+
 
 # CloudWatch Alarm for Backend EC2 CPU Utilization
 resource "aws_cloudwatch_metric_alarm" "backend_cpu_utilization" {
@@ -84,7 +90,7 @@ resource "aws_cloudwatch_metric_alarm" "backend_cpu_utilization" {
   threshold           = "80"
   alarm_description   = "Alarm if CPU utilization of the backend instance exceeds 80%"
   dimensions = {
-    InstanceId = module.ec2_instance.backend-instance.InstanceId
+    InstanceId = var.backend_instance_id
   }
   actions_enabled = true
 }
@@ -101,7 +107,7 @@ resource "aws_cloudwatch_metric_alarm" "jenkins_cpu_utilization" {
   threshold           = "80"
   alarm_description   = "Alarm if CPU utilization of the Jenkins instance exceeds 80%"
   dimensions = {
-    InstanceId = module.ec2_instance.jenkins.InstanceId
+    InstanceId = var.jenkins_instance_id
   }
   actions_enabled = true
 }
@@ -118,13 +124,14 @@ resource "aws_cloudwatch_metric_alarm" "rds_cpu_utilization" {
   threshold           = "80"
   alarm_description   = "Alarm if RDS CPU utilization exceeds 80%"
   dimensions = {
-    DBInstanceIdentifier = module.rds.aws_db_instance.DBInstanceIdentifier
+    #DBInstanceIdentifier = var.DBInstanceIdentifier
+    DBInstanceIdentifier = var.rds_instance_id
   }
   actions_enabled = true
 }
 
 # CloudWatch Log Subscription for Frontend Instance Logs
-resource "aws_cloudwatch_log_subscription_filter" "frontend_log_subscription" {
+/*resource "aws_cloudwatch_log_subscription_filter" "frontend_log_subscription" {
   name            = "frontend-log-subscription"
   log_group_name  = aws_cloudwatch_log_group.frontend_log_group.name
   filter_pattern  = ""
@@ -153,4 +160,4 @@ resource "aws_cloudwatch_log_subscription_filter" "rds_log_subscription" {
   log_group_name  = aws_cloudwatch_log_group.rds_log_group.name
   filter_pattern  = ""
   destination_arn = "arn:aws:sns:us-west-2:123456789012:MyTopic"
-}
+}*/
